@@ -34,6 +34,8 @@ public class Solution {
         Thread.sleep(2000);
         isStopped = true;
         Thread.sleep(1000);
+        System.out.println(ivanov.name + " сделал " + ivanov.stopwatch.stepNumber + " шагов");
+        System.out.println(petrov.name + " сделал " + petrov.stopwatch.stepNumber + " шагов");
     }
 
     public static class Stopwatch extends Thread {
@@ -55,7 +57,11 @@ public class Solution {
 
         private void doStep() throws InterruptedException {
             stepNumber++;
-            //add your code here - добавь код тут
+            if (owner.getSpeed() == 2) {  // Или можно написать Thread.sleep((long) 1000/owner.getSpeed())
+                Thread.sleep(500);
+            } else if (owner.getSpeed() == 4) {
+                Thread.sleep(250);
+            }
             System.out.println(owner.getName() + " делает шаг №" + stepNumber + "!");
         }
     }

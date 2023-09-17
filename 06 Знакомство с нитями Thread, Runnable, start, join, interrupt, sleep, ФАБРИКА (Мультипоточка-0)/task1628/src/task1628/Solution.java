@@ -60,6 +60,14 @@ public class Solution {
 
         public void run() {
             //напишите тут ваш код
+            while(true){
+                try {
+                    result.add(reader.readLine());
+                    readStringCount.incrementAndGet();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
 
         @Override

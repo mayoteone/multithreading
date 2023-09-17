@@ -24,7 +24,8 @@ public class Solution {
         Cat cat2 = new Cat("Пушинка");
     }
 
-    private static void investigateWorld() {
+    private static void investigateWorld() throws InterruptedException {
+        Thread.sleep(200);
 
     }
 
@@ -50,7 +51,9 @@ public class Solution {
 
         private void initAllKittens() throws InterruptedException {
             kitten1.start();
+            kitten1.join();
             kitten2.start();
+            kitten2.join();
         }
     }
 
@@ -61,7 +64,11 @@ public class Solution {
 
         public void run() {
             System.out.println(getName() + ", вылез из корзинки");
-            investigateWorld();
+            try {
+                investigateWorld();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }

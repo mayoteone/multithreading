@@ -32,7 +32,16 @@ public class Solution {
 
     public static int calculateHorsesFinished(List<Horse> horses) throws InterruptedException {
         int finishedCount = 0;
-        //напишите тут ваш код
+
+        for (Horse horse: horses) {
+
+            if (!horse.isFinished()){
+                System.out.println("Warning for " + horse.getName());
+                horse.join();
+            }
+            finishedCount++;
+        }
+
         return finishedCount;
     }
 

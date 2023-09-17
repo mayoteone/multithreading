@@ -1,9 +1,8 @@
 package task1721;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /* 
@@ -37,9 +36,78 @@ public class Solution {
     public static List<String> forRemoveLines = new ArrayList<String>();
 
     public static void main(String[] args) {
+
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
+            String file1 = reader.readLine();
+            String file2 = reader.readLine();
+
+            try (BufferedReader readerFile1 = new BufferedReader(new FileReader(file1));
+                 BufferedReader readerFile2 = new BufferedReader(new FileReader(file2))) {
+
+                String line1;
+                while ((line1 = readerFile1.readLine()) != null) {
+                    allLines.add(line1);
+                }
+                System.out.println(allLines);
+
+                String line2;
+                while ((line2 = readerFile2.readLine()) != null) {
+                    forRemoveLines.add(line2);
+                }
+                System.out.println(forRemoveLines);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            new Solution().joinData();
+        } catch (CorruptedDataException e) {
+            System.out.println("Cписок allLines не содержит все строки из forRemoveLines");
+        }
+
+        System.out.println(allLines);
+        System.out.println(forRemoveLines);
+
+
     }
 
     public void joinData() throws CorruptedDataException {
+
+        if (allLines.containsAll(forRemoveLines)) {
+            allLines.removeAll(forRemoveLines);
+            return;
+        } else {
+            allLines.clear();
+            throw new CorruptedDataException();
+        }
+
+
+//        Iterator<String> listIterator = allLines.iterator();
+//
+//        for (int i = 0; i < forRemoveLines.size(); i++) {
+//
+//            int count = 0;
+//
+//            while (listIterator.hasNext()) {
+//                String line = listIterator.next();
+//
+//                if (forRemoveLines.equals(line)) {
+//                    listIterator.remove();
+//                    count++;
+//                }
+//
+//                if (i == forRemoveLines.size() - 1) {
+//                    if (count == 0) {
+//                        allLines.clear();
+//                        throw new CorruptedDataException();
+//                    }
+//                }
+//
+//            }
+//
+//        }
 
     }
 }

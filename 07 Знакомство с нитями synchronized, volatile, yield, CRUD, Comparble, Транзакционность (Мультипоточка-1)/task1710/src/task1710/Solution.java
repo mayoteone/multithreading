@@ -1,5 +1,6 @@
 package task1710;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -63,7 +64,42 @@ public class Solution {
         allPeople.add(Person.createMale("Петров Петр", new Date()));  //сегодня родился    id=1
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
         //напишите тут ваш код
+        SimpleDateFormat inputDateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.ENGLISH);
+        SimpleDateFormat outputDateFormat = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
+
+        if (args[0].equals("-c")){
+
+            if (args[2].equals("м")){
+                allPeople.add(Person.createMale(args[1],inputDateFormat.parse(args[3])));
+                System.out.println(allPeople.size() - 1);
+            } else if (args[2].equals("ж")) {
+                allPeople.add(Person.createFemale(args[1], inputDateFormat.parse(args[3])));
+                System.out.println(allPeople.size() - 1);
+            }
+
+        } else if (args[0].equals("-r")){
+            String name = allPeople.get(Integer.parseInt(args[1])).getName();
+            String sex = allPeople.get(Integer.parseInt(args[1])).getSex().equals(Sex.MALE)? "м" : "ж";
+            String birthDate = outputDateFormat.format(allPeople.get(Integer.parseInt(args[1])).getBirthDate());
+
+            System.out.println(name + " " + sex + " " + birthDate);
+
+        } else if (args[0].equals("-u")){
+            Person person = allPeople.get(Integer.parseInt(args[1]));
+
+            person.setName(args[2]);
+            person.setSex(args[3].equals("м")? Sex.MALE : Sex.FEMALE);
+            person.setBirthDate(new Date(String.valueOf(new SimpleDateFormat(args[4], Locale.ENGLISH))));
+
+        } else if (args[0].equals("-d")) {
+            Person person = allPeople.get(Integer.parseInt(args[1]));
+
+            person.setName(null);
+            person.setSex(null);
+            person.setBirthDate(null);
+
+        }
     }
 }
